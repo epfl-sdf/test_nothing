@@ -1,4 +1,4 @@
-# Verificateur de 404
+# Verificateur du contenu `Nothing Found`
 Verificateur de URL pour savoir si les sites correspondants contiennent le texte `Nothing Found` dans leur corps.
 
 # Utilisation
