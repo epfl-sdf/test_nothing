@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-#petit script pour aspirer une liste de sites web qui se trouvent dans un fichier .csv
-#zf170713.0937
+#petit script pour si un site contient le texte "Nothing Found" dans son corps
+#zf170719.1630
 #source: https://www.cyberciti.biz/faq/unix-linux-bash-read-comma-separated-cvsfile/
 
 echo ---------- start

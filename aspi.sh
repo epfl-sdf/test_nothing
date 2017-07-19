@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-#Petit script pour juste aspirer un site web pour faire des tests en local
-#ATTENTION: ça été fait pour une structure perso !
-#faudra modifier le script pour d'autres structures
-#zf170713.1115
+#Petit script pour verifier si un site contient le texte "Nothing found" dans son corps.
+#zf170719.1629
 #source: https://stackoverflow.com/questions/22614331/authenticate-on-wordpress-with-wget
 
 
