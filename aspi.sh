@@ -9,7 +9,7 @@
 #test si l'argument est vide
 if [ -z "$1" ]
   then
-    echo -e "\nSyntax: ./aspi.sh site_name user passwd \n\n"
+    echo -e "\nSyntax: ./aspi.sh site_name user passwd output_prefix \n\n"
     exit
 fi
 
@@ -24,6 +24,7 @@ log=$2
 pwd=$3
 cookies="cookies.txt"
 agent="Mozilla/5.0"
+output_prefix=$4
 
 #source ../aspi.credentials.sh
 
@@ -54,18 +55,26 @@ wget \
     "$login_address"
 
 # access home page with authenticated cookies
-wget \
-    --user-agent="$agent" \
-    --load-cookies $cookies \
-    -p -k -E -m -e robots=off –w 2 --no-parent "$site"
+#RESULT=`wget --header='Accept-Language: en-US,en;q=0.5' --user-agent="$agent" --load-cookies $cookies -qO- $site` | grep "Nothing Found"
+#wget --header='Accept-Language: en-US,en;q=0.5' --user-agent="$agent" --load-cookies $cookies -qO- $site | grep "Nothing Found"
+#echo $RESULT
+if [[ $(wget --header='Accept-Language: en-US,en;q=0.5' --user-agent="$agent" --load-cookies $cookies -qO- $site | grep "Nothing Found") ]]; then
+    echo $site >> $output_prefix"_ko.txt"
+else
+    echo $site >> $output_prefix"_ok.txt"
+fi
+#wget \
+#    --user-agent="$agent" \
+#    --load-cookies $cookies \
+#    -p -k -E -m -e robots=off –w 2 --no-parent "$site"
 
 rm $cookies
 
-echo -e "
-il y a comme nombre de pages HTML:
-"
+#echo -e "
+#il y a comme nombre de pages HTML:
+#"
 
-find $server |grep '\.html' |wc
+#find $server |grep '\.html' |wc
 
 
 #wget http://portesouvertes.epfl.ch/templates/epfl/static_epfl_menus/header_en.jsp -P ./portesouvertes.epfl.ch/templates/epfl/static_epfl_menus/
