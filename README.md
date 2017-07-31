@@ -12,7 +12,7 @@ git clone https://github.com/epfl-sdf/test_nothing.git
 ## Lancer le vérificateur
 Simplement avec la commande:
 ```
-./batch_aspi.sh fichier_liste.csv
+./batch.sh fichier_liste.csv
 ```
 
 Le fichier `fichier_liste.csv` est un fichier `.csv` qui, pour notre configuration, contient 6 colonnes.

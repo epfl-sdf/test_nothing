@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #Petit script pour verifier si un site contient le texte "Nothing found" dans son corps.
-#zf170719.1629
+#zf170719.1629, zf170731.1717
 #source: https://stackoverflow.com/questions/22614331/authenticate-on-wordpress-with-wget
 
 
@@ -11,13 +11,13 @@ if [ -z "$1" ]
     exit
 fi
 
-echo ---------- start aspi.sh
+echo ---------- start test.sh
 
-server="test-web-wordpress.epfl.ch"
-site_name=$1
-url="/v1-testwp/"$1
-site="http://"$server$url
-login_address="$site/wp-login.php"
+#server="test-web-wordpress.epfl.ch"
+#site_name=$1
+#url="/v1-testwp/"$1
+site=$1
+login_address=$site"/wp-login.php"
 log=$2
 pwd=$3
 cookies="cookies.txt"
@@ -26,19 +26,19 @@ output_prefix=$4
 
 #source ../aspi.credentials.sh
 
+echo "."
 echo $1
 echo $2
 echo $3
-echo ""
-echo $server$url
-echo $server$url".html"
-echo ""
+echo $4
+echo ".."
 echo $site
 echo $login_address
 echo $log
 echo $pwd
-
-#exit
+echo $output_prefix
+echo "..."
+exit
 
 rm -R $cookies $server$url $server$url".html"
 
