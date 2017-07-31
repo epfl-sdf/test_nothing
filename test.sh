@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #Petit script pour verifier si un site contient le texte "Nothing found" dans son corps.
-#zf170719.1629, zf170731.1717
+#zf170719.1629, zf170731.2125
 #source: https://stackoverflow.com/questions/22614331/authenticate-on-wordpress-with-wget
 
 
@@ -13,18 +13,13 @@ fi
 
 echo ---------- start test.sh
 
-#server="test-web-wordpress.epfl.ch"
-#site_name=$1
-#url="/v1-testwp/"$1
 site=$1
 login_address=$site"/wp-login.php"
 log=$2
-pwd=$3
+pwd=$3		#"z"
 cookies="cookies.txt"
 agent="Mozilla/5.0"
 output_prefix=$4
-
-#source ../aspi.credentials.sh
 
 echo "."
 echo $1
@@ -38,10 +33,7 @@ echo $log
 echo $pwd
 echo $output_prefix
 echo "..."
-exit
-
-rm -R $cookies $server$url $server$url".html"
-
+#exit
 
 # authenticate and save cookies
 wget \
@@ -51,22 +43,34 @@ wget \
     --delete-after \
     --post-data="log=$log&pwd=$pwd&testcookie=1" \
     "$login_address"
+#exit
+
 
 # access home page with authenticated cookies
-#RESULT=`wget --header='Accept-Language: en-US,en;q=0.5' --user-agent="$agent" --load-cookies $cookies -qO- $site` | grep "Nothing Found"
-#wget --header='Accept-Language: en-US,en;q=0.5' --user-agent="$agent" --load-cookies $cookies -qO- $site | grep "Nothing Found"
-#echo $RESULT
-if [[ $(wget --header='Accept-Language: en-US,en;q=0.5' --user-agent="$agent" --load-cookies $cookies -qO- $site | grep "Nothing Found") ]]; then
-    echo $site >> $output_prefix"_ko.txt"
+echo "charge la page"
+RESULT=`wget --header='Accept-Language: en-US,en;q=0.5' --user-agent="$agent" --load-cookies $cookies -qO- $site`
+#echo $RESULT | w3m -T text/html
+
+if [[ $(echo $RESULT | grep "Username or Email Address") ]]; then
+	echo "oups"
+	echo $site >> $output_prefix"_no_logon.txt"
 else
-    echo $site >> $output_prefix"_ok.txt"
+	echo "cela passe"
+	if [[ $(echo $RESULT | grep "Nothing Found") ]]; then
+	    echo $site >> $output_prefix"_nothing.txt"
+	else
+	    echo $site >> $output_prefix"_ok.txt"
+	fi
 fi
-#wget \
-#    --user-agent="$agent" \
-#    --load-cookies $cookies \
-#    -p -k -E -m -e robots=off –w 2 --no-parent "$site"
 
 rm $cookies
+
+
+
+
+
+
+
 
 #echo -e "
 #il y a comme nombre de pages HTML:
